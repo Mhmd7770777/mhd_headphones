@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import product from "../components/Product";
 
 const Context = createContext();
 
@@ -31,9 +30,6 @@ export const StateContext = ({ children }) => {
             ...cartProduct,
             quantity: cartProduct.quantity + quantity,
           };
-        else {
-          return { ...cartProduct };
-        }
       });
 
       setCartItems(updatedCartItems);
@@ -60,14 +56,15 @@ export const StateContext = ({ children }) => {
     setCartItems(newCartItems);
   };
 
-  const toggleCartItemQuantity = (id, value) => {
+  const toggleCartItemQuanitity = (id, value) => {
     foundProduct = cartItems.find((item) => item._id === id);
     index = cartItems.findIndex((product) => product._id === id);
     const newCartItems = cartItems.filter((item) => item._id !== id);
+
     if (value === "inc") {
       setCartItems([
         ...newCartItems,
-        { ...foundProduct, quantity: (foundProduct.quantity += 1) },
+        { ...foundProduct, quantity: foundProduct.quantity + 1 },
       ]);
       setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
@@ -75,7 +72,7 @@ export const StateContext = ({ children }) => {
       if (foundProduct.quantity > 1) {
         setCartItems([
           ...newCartItems,
-          { ...foundProduct, quantity: (foundProduct.quantity -= 1) },
+          { ...foundProduct, quantity: foundProduct.quantity - 1 },
         ]);
         setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
@@ -107,8 +104,8 @@ export const StateContext = ({ children }) => {
         incQty,
         decQty,
         onAdd,
+        toggleCartItemQuanitity,
         onRemove,
-        toggleCartItemQuantity,
         setCartItems,
         setTotalPrice,
         setTotalQuantities,
