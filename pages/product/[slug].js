@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Product } from "../../components";
-import { useStateContext } from "../../context/StateContext";
+import { useStateContext } from "../../context/stateContext";
 
 import {
   AiOutlineMinus,
